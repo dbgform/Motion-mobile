@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:fan/hardcore.dart';
+import 'package:motion/hardcore.dart';
 
 class ProgramPag extends StatelessWidget {
   @override

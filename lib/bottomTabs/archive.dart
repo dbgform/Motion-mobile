@@ -7,16 +7,16 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-//import 'package:fan/bottomTabs/me.dart';
-import 'package:fan/bottomTabs/programs.dart';
-import 'package:fan/bottomTabs/meVertical.dart';
-import 'package:fan/bottomTabs/schedule.dart';
-import 'package:fan/misc/stateHelper.dart';
-import 'package:fan/hardcore.dart';
-import 'package:fan/widgets/archiveBarWidget.dart';
+//import 'package:motion/bottomTabs/me.dart';
+import 'package:motion/bottomTabs/programs.dart';
+import 'package:motion/bottomTabs/meVertical.dart';
+import 'package:motion/bottomTabs/schedule.dart';
+import 'package:motion/misc/stateHelper.dart';
+import 'package:motion/hardcore.dart';
+import 'package:motion/widgets/archiveBarWidget.dart';
 import 'package:package_info/package_info.dart';
 
-import 'package:fan/widgets/verticalGridWidget.dart';
+import 'package:motion/widgets/verticalGridWidget.dart';
 
 class ArchiveStateful extends StatefulWidget {
   const ArchiveStateful({Key? key}) : super(key: key);

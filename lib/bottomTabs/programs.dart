@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:fan/widgets/programsGridWidget.dart';
+import 'package:motion/widgets/programsGridWidget.dart';
 
 class ProgramsPage extends StatelessWidget {
   Widget build(BuildContext context) {

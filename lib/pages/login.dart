@@ -5,7 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 //import 'package:jflutter_bike/hardcore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fan/misc/auth.dart';
+import 'package:motion/misc/auth.dart';
 
 class LoginPage extends StatefulWidget {
   @override

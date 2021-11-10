@@ -1,4 +1,4 @@
-package com.motion.fan;
+package com.fan.motion;
 
 import io.flutter.embedding.android.FlutterActivity;
 

@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:168698286011:android:90c77a36de9120d80a7e9e",
+        "mobilesdk_app_id": "1:168698286011:android:2d149511892864890a7e9e",
         "android_client_info": {
-          "package_name": "com.motion.fan"
+          "package_name": "com.fan.motion"
         }
       },
       "oauth_client": [

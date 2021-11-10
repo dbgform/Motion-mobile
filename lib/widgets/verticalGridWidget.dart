@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
-import 'package:fan/hardcore.dart';
+import 'package:motion/hardcore.dart';
 
 class VerticalGridWidget extends StatefulWidget {
   final int type;

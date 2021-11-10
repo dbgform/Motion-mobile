@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fan/hardcore.dart';
+import 'package:motion/hardcore.dart';
 import 'package:get/get.dart';
 
 class SchedulePage extends StatelessWidget {
