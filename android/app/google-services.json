@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "168698286011",
+    "project_id": "motion-be594",
+    "storage_bucket": "motion-be594.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:168698286011:android:90c77a36de9120d80a7e9e",
+        "android_client_info": {
+          "package_name": "com.motion.fan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "168698286011-ag70t2pmh7a76clk016ple3ah0nl4fqf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgFVoB1YaSknXN7nhxMvq9-9u7CCQ68Uk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "168698286011-ag70t2pmh7a76clk016ple3ah0nl4fqf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
