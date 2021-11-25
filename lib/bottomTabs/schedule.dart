@@ -1,21 +1,95 @@
 import 'package:flutter/material.dart';
 import 'package:motion/hardcore.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
-class SchedulePage extends StatelessWidget {
+class SchedulePage extends StatefulWidget {
+  @override
+  State<SchedulePage> createState() => _SchedulePageState();
+}
+
+class _SchedulePageState extends State<SchedulePage> {
+  final _currentDate = DateTime.now();
+  final _dayFormatter = DateFormat('d');
+  final _monthFormatter = DateFormat('MMM');
+  final _weekFormatter = DateFormat('EEEE');
   @override
   Widget build(BuildContext context) {
     return SizedBox.expand(
         child: Container(
             child: ListView(
       scrollDirection: Axis.vertical,
-      children: buildDays(),
+      children: buildRigthDays(),
     )));
   }
 
+  List<Widget> buildRigthDays() {
+    final dates = <Widget>[];
+
+    for (int i = 0; i < 7; i++) {
+      final date = _currentDate.add(Duration(days: i));
+      // dates.add(Column(
+      //   children: [
+      //     Text(_dayFormatter.format(date)),
+      //     Text(_monthFormatter.format(date)),
+      //   ],
+      // ));
+      dates.add(Container(
+        width: 380.0,
+        color: Colors.grey[300],
+        child: Column(
+          children: [
+            Container(
+              //height: 50,
+              width: 380,
+              decoration: BoxDecoration(color: Colors.grey[200], boxShadow: [
+                BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 1,
+                    blurRadius: 1,
+                    offset: Offset(0, 1))
+              ]),
+              child: Row(
+                  //alignment: Alignment.centerRight,
+                  // margin: EdgeInsets.symmetric(horizontal: 10),
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '${_dayFormatter.format(date) + ' ' + _monthFormatter.format(date)}',
+                      style: TextStyle(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 1.0,
+                          fontSize: 25.0),
+                    ),
+                    Text(
+                      '${_weekFormatter.format(date)}',
+                      style: TextStyle(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 1.0,
+                          fontSize: 25.0),
+                    ),
+                  ]),
+            ),
+            buildCard(i)
+          ],
+        ),
+      ));
+      dates.add(Container(
+        width: 1.0,
+        color: Colors.grey[400],
+      ));
+    }
+
+    return dates;
+  }
+
   List<Widget> buildDays() {
+    //  int.parse(DateFormat('d').format(DateTime.now()).toString());
+    int date = int.parse(DateFormat('d').format(DateTime.now()).toString());
     List<Widget> days = [];
-    for (var i = 9; i <= 18; i++) {
+    for (var i = date; i <= date + 6; i++) {
       days.add(Container(
         width: 380.0,
         color: Colors.grey[300],

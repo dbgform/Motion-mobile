@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+//import 'package:motion/pages/freeClass.dart';
 
 //import 'package:motion/bottomTabs/me.dart';
 import 'package:motion/bottomTabs/programs.dart';
@@ -44,7 +45,7 @@ class _ArchiveStatefulState extends State<ArchiveStateful> {
                           child: Container(
                               child: ListView(
                                   scrollDirection: Axis.vertical,
-                                  children: buildClassList()))),
+                                  children: buildClassList1(false)))),
                       onInit: () {
                         // buildClassList();
                         getClasses();
@@ -86,6 +87,7 @@ class _ArchiveStatefulState extends State<ArchiveStateful> {
         child: Column(
           children: [Expanded(child: SchedulePage())],
         )),
+    // FreeClass(),
     ProgramsPage(),
     MeVertical()
   ];
@@ -95,6 +97,8 @@ class _ArchiveStatefulState extends State<ArchiveStateful> {
       _selectedIndex = index;
     });
   }
+
+  late BuildContext context1;
 
   late PackageInfo packageInfo;
 
@@ -110,11 +114,16 @@ class _ArchiveStatefulState extends State<ArchiveStateful> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays([]);
+    //showAlertDialog(context);
+    setState(() {
+      context1 = context;
+    });
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+    // SystemChrome.setEnabledSystemUIOverlays([]);
+
     return DefaultTabController(
         length: 3,
         child: Scaffold(
@@ -164,6 +173,31 @@ class _ArchiveStatefulState extends State<ArchiveStateful> {
               ),
             )));
   }
+
+  showAlertDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = TextButton(
+      child: Text("OK"),
+      onPressed: () {},
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("My title"),
+      content: Text("This is my message."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 }
 
 Widget buildImageCard(int index) => Card(
@@ -180,7 +214,18 @@ Widget buildImageCard(int index) => Card(
           fit: BoxFit.cover,
           child: InkWell(
             onTap: () {
-              Get.toNamed('/videoMobile', arguments: cyclingList[index].uri);
+              // showAlertDialog(context1);
+              if (currentUser != null) {
+                if (!currentUser!.membership!
+                    .toDate()
+                    .isBefore(DateTime.now())) {
+                  print(!currentUser!.membership!
+                      .toDate()
+                      .isBefore(DateTime.now()));
+                  Get.toNamed('/videoMobile',
+                      arguments: cyclingList[index].uri);
+                }
+              }
             },
           ),
         ),
@@ -263,13 +308,18 @@ Widget buildImageCard(int index) => Card(
       ],
     ));
 
-List<Widget> buildClassList() {
+List<Widget> buildClassList1(bool isFree) {
   List<Widget> result = [];
-  for (var i = 0; i < cyclingList.length; i++) {
+  int length = 2;
+  if (!isFree) {
+    length = cyclingList.length;
+  }
+  for (var i = 0; i < length; i++) {
     try {
       result.add(
         Container(width: 300, height: 230, child: buildImageCard(i)),
       );
+      //  print(result);
     } catch (e) {}
   }
   return result;

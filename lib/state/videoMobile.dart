@@ -17,29 +17,38 @@ class _VideoAppStateMobile extends State<VideoAppMobile> {
     super.initState();
     _controller = VideoPlayerController.network(data)
       ..initialize().then((_) {
+        _controller.play();
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-        setState(() {});
+        setState(() {
+          _controller.play();
+        });
       });
-  }
 
-  @override
-  Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
     ]);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Video Demo',
       home: Scaffold(
           body: Stack(
               alignment: Alignment.bottomCenter,
-              fit: StackFit.expand,
+              fit: StackFit.loose,
               children: [
+            Container(
+              color: Colors.black,
+            ),
+
             _controller.value.isInitialized
-                ? AspectRatio(
+                ? Center(
+                    child: AspectRatio(
                     aspectRatio: _controller.value.aspectRatio,
                     child: VideoPlayer(_controller),
-                  )
+                  ))
                 : Center(child: CircularProgressIndicator()),
             Positioned(
               child: IconButton(
@@ -88,6 +97,14 @@ class _VideoAppStateMobile extends State<VideoAppMobile> {
             //     allowScrubbing: false,
             //   ),
             // ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: VideoProgressIndicator(
+                _controller,
+                allowScrubbing: false,
+              ),
+            )
+
             // GetBuilder<VideoStateManager>(
             //   // specify type as Controller
             //   init: VideoStateManager(), // intialize with the Controller
@@ -107,6 +124,11 @@ class _VideoAppStateMobile extends State<VideoAppMobile> {
   @override
   void dispose() {
     super.dispose();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    //Wakelock.disable();
     _controller.dispose();
   }
 }

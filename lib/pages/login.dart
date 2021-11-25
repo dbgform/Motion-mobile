@@ -17,9 +17,11 @@ class _LoginPageState extends State<LoginPage> {
 
   final _emailTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
+  final _nameTextController = TextEditingController();
 
   final _focusEmail = FocusNode();
   final _focusPassword = FocusNode();
+  final _focusName = FocusNode();
 
   bool isLogin = false;
 
@@ -42,34 +44,54 @@ class _LoginPageState extends State<LoginPage> {
         onTap: () {
           _focusEmail.unfocus();
           _focusPassword.unfocus();
+          _focusName.unfocus();
         },
         child: Scaffold(
+            resizeToAvoidBottomInset: false,
             body: FutureBuilder(
-          future: _initializeFirebase(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return Center(
-                  child: Container(
-                //color: Colors.grey[200],
-                alignment: Alignment.center,
-                child: Container(
+              future: _initializeFirebase(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return Center(
+                      child: Container(
+                    //color: Colors.grey[200],
+                    alignment: Alignment.topCenter,
+                    child: Container(
 
-                    /// width: 1250,
-                    // height: 600,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(17.0)),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [Center(child: leftHalf()), rightHalf()],
-                      ),
-                    )),
-              ));
-            }
-            return CircularProgressIndicator();
-          },
-        )));
+                        /// width: 1250,
+                        // height: 600,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(17.0)),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: 100,
+                                width: 200,
+                                // decoration: BoxDecoration(
+                                //   color: Colors.white,
+                                //   boxShadow: [
+                                //     BoxShadow(
+                                //         color: Colors.grey.withOpacity(0.5),
+                                //         spreadRadius: 1,
+                                //         blurRadius: 1,
+                                //         offset: Offset(0, 1))
+                                //   ],
+                                // ),
+                                child: Image.asset('assets/logo1.png'),
+                              ),
+                              Center(child: leftHalf()),
+                              rightHalf()
+                            ],
+                          ),
+                        )),
+                  ));
+                }
+                return CircularProgressIndicator();
+              },
+            )));
   }
 
   Widget rightHalf() {
@@ -80,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           InkWell(
             onTap: () {
-              Get.toNamed('/');
+              Get.toNamed('/freeClass');
             },
             child: Container(
                 decoration: BoxDecoration(
@@ -192,6 +214,21 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   height: 20,
                 ),
+                isLogin
+                    ? Container()
+                    : SizedBox(
+                        width: 400,
+                        child: TextFormField(
+                          controller: _nameTextController,
+                          focusNode: _focusName,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(50)),
+                              labelText: 'Name',
+                              hintText: 'Enter secure password'),
+                        ),
+                      ),
                 // Row(
                 //   mainAxisAlignment: MainAxisAlignment.center,
                 //   children: [
@@ -250,17 +287,31 @@ class _LoginPageState extends State<LoginPage> {
                           onPressed: () async {
                             _focusEmail.unfocus();
                             _focusPassword.unfocus();
+                            _focusName.unfocus();
 
                             if (_formKey.currentState!.validate()) {
                               setState(() {
                                 _isProcessing = true;
                               });
-
-                              User? user =
-                                  await FireAuth.signInUsingEmailPassword(
-                                email: _emailTextController.text,
-                                password: _passwordTextController.text,
-                              );
+                              User? user;
+                              if (isLogin) {
+                                user = await FireAuth.signInUsingEmailPassword(
+                                  email: _emailTextController.text,
+                                  password: _passwordTextController.text,
+                                );
+                              } else {
+                                user =
+                                    await FireAuth.registerUsingEmailPassword(
+                                  email: _emailTextController.text,
+                                  password: _passwordTextController.text,
+                                );
+                                await FirebaseFirestore.instance
+                                    .collection("users")
+                                    .add({
+                                  'useerId': user?.uid,
+                                  'name': _nameTextController.text
+                                });
+                              }
 
                               setState(() {
                                 _isProcessing = false;
