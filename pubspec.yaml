@@ -49,6 +49,8 @@ dependencies:
   shared_preferences: ^2.0.8
   wakelock: ^0.5.6
   purchases_flutter: ^3.7.0
+  sentry: ^6.2.2
+  sentry_flutter: ^6.2.2
 
 dev_dependencies:
   flutter_test:
