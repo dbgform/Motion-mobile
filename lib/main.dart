@@ -29,9 +29,9 @@ main() async {
   print(DateFormat('d').format(DateTime.now()));
   DateTime date = new DateTime(now.year);
   print(date);
-  Wakelock.enable();
-  await PurchaseApi.init();
-  await PurchaseApi.fetchOffers();
+  // Wakelock.enable();
+  // await PurchaseApi.init();
+  //await PurchaseApi.fetchOffers();
   await getClasses();
 
   runApp(
